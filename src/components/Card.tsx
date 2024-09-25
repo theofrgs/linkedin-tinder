@@ -1,31 +1,23 @@
-import React, { useRef, useState } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+import React, { useRef } from "react";
 import {
   View,
   Text,
-  Image,
   PanResponder,
   Animated,
   Dimensions,
   ImageBackground,
 } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 const SWIPE_THRESHOLD = 120;
 
-const cards = [
-  { image: require("./assets/images/hulk.webp"), title: "Hulk" },
-  { image: require("./assets/images/ironman.webp"), title: "Ironman" },
-  { image: require("./assets/images/thor.jpeg"), title: "Thor" },
-];
-
-const SwipeableCard = ({
-  card,
-  onSwipeOff,
-}: {
+type Props = {
   card: any;
   onSwipeOff: () => void;
-}) => {
+};
+
+const Card = ({ card, onSwipeOff }: Props) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const rotate = pan.x.interpolate({
     inputRange: [-width / 2, 0, width / 2],
@@ -72,6 +64,10 @@ const SwipeableCard = ({
         imageStyle={{ borderRadius: 15 }}
         style={{ justifyContent: "flex-end" }}
       >
+        <LinearGradient
+          className="h-2/4 w-full absolute rounded-lg"
+          colors={["transparent", "rgba(0,0,0,0.7)", "black"]}
+        />
         <View className="p-5 bg-opacity-80">
           <Text className="text-2xl font-bold text-white">{card.title}</Text>
         </View>
@@ -80,38 +76,4 @@ const SwipeableCard = ({
   );
 };
 
-export default function App() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleSwipeOff = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 2 ? 0 : prevIndex + 1));
-  };
-
-  return (
-    <GestureHandlerRootView className="flex-1 h-full w-full bg-black justify-center items-center">
-      {cards.slice(currentIndex, currentIndex + 3).map((card, index) => {
-        const isFirst = index === 0;
-        const scale = isFirst ? 1 : 1 - index * 0.01;
-        const translateY = isFirst ? 0 : index * -10;
-        return (
-          <Animated.View
-            key={index}
-            style={{
-              transform: [{ scale }, { translateY }],
-              width: width - 40,
-              height: height - 50,
-              position: "absolute",
-              zIndex: -index,
-            }}
-            className="rounded-lg shadow-lg"
-          >
-            <SwipeableCard card={card} onSwipeOff={handleSwipeOff} />
-          </Animated.View>
-        );
-      })}
-      {currentIndex >= cards.length && (
-        <Text className="text-2xl font-bold">No more cards!</Text>
-      )}
-    </GestureHandlerRootView>
-  );
-}
+export default Card;
