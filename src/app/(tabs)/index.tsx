@@ -19,7 +19,7 @@ const SwipesPage = () => {
   };
 
   return (
-    <GestureHandlerRootView className="flex-1 h-full w-full justify-center items-center">
+    <GestureHandlerRootView className="flex-1 h-full w-full justify-center items-center mt-10">
       {cards.slice(currentIndex, currentIndex + 3).map((card, index) => {
         const isFirst = index === 0;
         const scale = isFirst ? 1 : 1 - index * 0.01;
@@ -30,7 +30,7 @@ const SwipesPage = () => {
             style={{
               transform: [{ scale }, { translateY }],
               width: width - 40,
-              height: height -150,
+              height: height - 150,
               position: "absolute",
               zIndex: -index,
             }}
