@@ -3,9 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
@@ -14,6 +12,7 @@
     ".expo/types/**/*.ts",
     "types/expo-env.d.ts",
     "types/nativewind-env.d.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "src/components/TalentCard.zz"
   ]
 }

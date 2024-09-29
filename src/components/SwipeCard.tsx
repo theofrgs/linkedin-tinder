@@ -8,16 +8,17 @@ import {
   Dimensions,
   ImageBackground,
 } from "react-native";
+import TalentCard from "./TalentCard";
 
 const { width } = Dimensions.get("window");
 const SWIPE_THRESHOLD = 120;
 
 type Props = {
-  card: any;
+  profile: any;
   onSwipeOff: () => void;
 };
 
-const Card = ({ card, onSwipeOff }: Props) => {
+const SwipeCard = ({ profile, onSwipeOff }: Props) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const rotate = pan.x.interpolate({
     inputRange: [-width / 2, 0, width / 2],
@@ -58,22 +59,9 @@ const Card = ({ card, onSwipeOff }: Props) => {
         },
       ]}
     >
-      <ImageBackground
-        source={card.image}
-        className="w-full h-full rounded-lg"
-        imageStyle={{ borderRadius: 15 }}
-        style={{ justifyContent: "flex-end" }}
-      >
-        <LinearGradient
-          className="h-2/4 w-full absolute rounded-lg"
-          colors={["transparent", "rgba(0,0,0,0.7)", "black"]}
-        />
-        <View className="p-5 bg-opacity-80">
-          <Text className="text-2xl font-bold text-white">{card.title}</Text>
-        </View>
-      </ImageBackground>
+      <TalentCard profile={profile} />
     </Animated.View>
   );
 };
 
-export default Card;
+export default SwipeCard;
